@@ -8,6 +8,7 @@ django = "*"
 django-bootstrap3 = "*"
 mistletoe-ebp = "*"
 mistune = "*"
+django-braces = "*"
 
 [dev-packages]
 
