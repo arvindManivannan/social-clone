@@ -1,7 +1,7 @@
 from typing import Any
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404
-from .models import Group, GroupMemeber
+from .models import Group, GroupMember
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
@@ -26,7 +26,7 @@ class JoinGroup(LoginRequiredMixin, generic.RedirectView):
         group = get_object_or_404(Group, slug=self.kwargs.get('slug'))
 
         try:
-            GroupMemeber.objects.create(user=self.request.user, group=group)
+            GroupMember.objects.create(user=self.request.user, group=group)
         except IntegrityError:
             messages.warning(self.request, ('Warning already a memeber!'))
         else:
@@ -40,11 +40,11 @@ class LeaveGroup(LoginRequiredMixin, generic.RedirectView):
     
     def get(self, request, *args, **kwargs):
         try:
-            membership = GroupMemeber.objects.filter(
+            membership = GroupMember.objects.filter(
                 user = self.request.user,
-                group_slug = self.kwargs.get('slug')
+                group__slug = self.kwargs.get('slug')
             ).get()
-        except GroupMemeber.DoesNotExist:
+        except GroupMember.DoesNotExist:
             messages.warning(self.request, 'Sorry you are not in this group!')
         else:
             membership.delete()

@@ -4,7 +4,7 @@
         <div class="content">
             {% if user.is_authenticated %}
                 <h2>Welcome Back!</h2>
-                <a href="{% url 'post:for_user' username=user.username %}">@{{user.username}}</a>
+                <a href="{% url 'posts:for_user' username=user.username %}">@{{user.username}}</a>
             {% endif %}
             <h2>Groups</h2>
             <p>Welcome to the groups page!</p>
